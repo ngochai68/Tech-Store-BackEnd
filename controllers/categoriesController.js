@@ -10,6 +10,18 @@ async function getAllCategories(req, res, next) {
   }
 }
 
+async function getCategoryById(req, res, next) {
+  try {
+    const category = await Category.getCategoryById(req.params.categoryId);
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+    res.json({ message: 'Category retrieved successfully.', data: category });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createCategory(req, res, next) {
   try {
     const categoryId = await Category.createCategory(req.body);
@@ -42,6 +54,7 @@ async function deleteCategory(req, res, next) {
 
 module.exports = {
   getAllCategories,
+  getCategoryById,
   createCategory,
   updateCategory,
   deleteCategory

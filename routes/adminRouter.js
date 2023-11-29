@@ -12,6 +12,7 @@ router.delete('/products/:id', productsController.deleteProduct);
 
 // Tuyến đường mới cho categories
 router.get('/product-categories', categoriesController.getAllCategories);
+router.get('/product-categories/:categoryId', categoriesController.getCategoryById);
 router.post('/product-categories', categoriesController.createCategory);
 router.put('/product-categories/:categoryId', categoriesController.updateCategory);
 router.delete('/product-categories/:categoryId', categoriesController.deleteCategory);

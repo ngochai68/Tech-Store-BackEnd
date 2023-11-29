@@ -25,6 +25,19 @@ async function getCategories() {
   }
 }
 
+async function getCategoryById(categoryId) {
+  const connection = await pool.getConnection();
+  try {
+    const [categories] = await connection.query('SELECT * FROM product_categories WHERE category_id = ?', [categoryId]);
+    if (categories.length === 0) {
+      return null; // Or handle not found case as needed
+    }
+    return categories[0];
+  } finally {
+    connection.release();
+  }
+}
+
 async function createCategory(categoryData) {
   const connection = await pool.getConnection();
   try {
@@ -55,6 +68,7 @@ async function deleteCategory(categoryId) {
 
 module.exports = {
   getCategories,
+  getCategoryById,
   createCategory,
   updateCategory,
   deleteCategory
