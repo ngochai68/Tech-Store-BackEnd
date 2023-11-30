@@ -4,7 +4,7 @@ async function getAllProducts(req, res, next) {
   try {
     const products = await Product.getProducts();
     const message = 'Successfully retrieved all products';
-    res.json({ message, data: products });
+    res.json({ message, products });
   } catch (error) {
     next(error);
   }
@@ -15,7 +15,7 @@ async function getLatestProducts(req, res, next) {
   try {
     const newProducts = await Product.getNewProducts(limit);
     const message = 'Successfully retrieved latest products';
-    res.json({ message, data: newProducts });
+    res.json({ message, newProducts });
   } catch (error) {
     next(error);
   }

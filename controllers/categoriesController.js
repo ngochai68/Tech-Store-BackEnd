@@ -4,7 +4,7 @@ async function getAllCategories(req, res, next) {
   try {
     const categories = await Category.getCategories();
     const message = 'Categories retrieved successfully.';
-    res.json({ message, data: categories });
+    res.json({ message, categories });
   } catch (error) {
     next(error);
   }
@@ -13,10 +13,11 @@ async function getAllCategories(req, res, next) {
 async function getCategoryById(req, res, next) {
   try {
     const category = await Category.getCategoryById(req.params.categoryId);
+    const message = 'Category retrieved successfully.';
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
     }
-    res.json({ message: 'Category retrieved successfully.', data: category });
+    res.json({ message, category });
   } catch (error) {
     next(error);
   }
