@@ -42,7 +42,7 @@ async function getProductById(req, res, next) {
       res.status(404).json({ message });
       return;
     }
-    res.json({ message, data: product });
+    res.json({ message, product });
   } catch (error) {
     next(error);
   }
