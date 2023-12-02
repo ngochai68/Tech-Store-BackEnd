@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const baseUrl = 'http://localhost:3000';
 
 async function getAllProducts(req, res, next) {
   try {
@@ -23,12 +24,17 @@ async function getLatestProducts(req, res, next) {
 
 async function createProduct(req, res, next) {
   const productData = req.body;
+  if (req.file) {
+    productData.image_url = `${baseUrl}/images/${req.file.filename}`;
+  } else {
+    console.log(req.file);
+  }
   try {
     const productId = await Product.createProduct(productData);
     const message = 'Product created successfully';
     res.status(201).json({ message, productId });
   } catch (error) {
-    next(error);
+    res.status(200).json({ body: req.body, file: req.file });
   }
 }
 
@@ -51,6 +57,11 @@ async function getProductById(req, res, next) {
 async function updateProduct(req, res, next) {
   const productId = req.params.id;
   const updatedProductData = req.body;
+  if (req.file) {
+    updatedProductData.image_url = `${baseUrl}/images/${req.file.filename}`;
+  } else {
+    console.log(req.file);
+  }
   try {
     const success = await Product.updateProduct(productId, updatedProductData);
     const message = 'Product updated successfully';
