@@ -37,10 +37,21 @@ async function findUserByUsername(username) {
   }
 }
 
-// Add more functions as needed
+async function findUserById(userId) {
+  const query = 'SELECT * FROM users WHERE user_id = ?';
+
+  const connection = await pool.getConnection();
+  try {
+    const [users] = await connection.query(query, [userId]);
+    return users[0];
+  } finally {
+    connection.release();
+  }
+}
 
 module.exports = {
   createUser,
   findUserByEmail,
-  findUserByUsername
+  findUserByUsername,
+  findUserById
 };

@@ -45,18 +45,25 @@ async function login(req, res, next) {
   try {
     const user = await User.findUserByEmail(req.body.email);
 
-    if (user && (await bcrypt.compare(req.body.password, user.password))) {
-      // Tạo JWT token
-      const token = jwt.sign(
-        { userId: user.user_id, username: user.username },
-        process.env.JWT_SECRET, // Sử dụng secret từ biến môi trường
-        { expiresIn: '1h' } // Token hết hạn sau 1 giờ
-      );
-
-      res.json({ message: 'Logged in successfully', token: token });
-    } else {
-      res.status(401).json({ message: 'Invalid credentials' });
+    // Kiểm tra nếu không tìm thấy người dùng với email đó
+    if (!user) {
+      return res.status(401).json({ message: 'Email không tồn tại' });
     }
+
+    // Kiểm tra mật khẩu
+    const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Mật khẩu không chính xác' });
+    }
+
+    // Nếu mọi thứ đều ổn, tạo JWT token
+    const token = jwt.sign(
+      { userId: user.user_id, username: user.username },
+      process.env.JWT_SECRET, // Sử dụng secret từ biến môi trường
+      { expiresIn: '1h' } // Token hết hạn sau 1 giờ
+    );
+
+    res.json({ message: 'Đăng nhập thành công', token: token, userId: user.user_id });
   } catch (error) {
     next(error);
   }
