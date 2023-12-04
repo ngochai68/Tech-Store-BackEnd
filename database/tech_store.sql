@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2023 at 07:30 AM
+-- Generation Time: Dec 04, 2023 at 09:30 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -89,6 +89,34 @@ INSERT INTO `product_categories` (`category_id`, `category_name`, `created_at`) 
 (4, 'Printers & Scanners', '2023-11-30 17:00:53'),
 (5, 'PC Parts', '2023-11-19 17:00:53');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `role` varchar(50) NOT NULL DEFAULT 'user'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `created_at`, `role`) VALUES
+(10, 'ngochai22012003', 'ngochai22012003@gmail.com', '$2b$10$sXjcauXA2M/P.hfudj2TTOvflMC8.OLSvnefifBATZRSpwxEuPgfe', '2023-12-03 10:36:06', 'user'),
+(11, 'haitest01', 'haitest01@gmail.com', '$2b$10$rRS3f1.KDq/eHY4x6PlJAOQsaAFrGumNHtPrY2aSifa1W2ryAmwvy', '2023-12-04 07:09:29', 'user'),
+(12, 'haitest2', 'haitest2@gmail.com', '$2b$10$ILSXNIMz4LrJ05czAurZbeO91gwFV1Cpl0Jde3QvkwFLwuF/gPxNm', '2023-12-04 07:15:23', 'user'),
+(13, 'haitest1', 'haitest1@gmail.com', '$2b$10$2h5jRlehFes68Sg/gvZnBuUT73fjYlgJiFVJYsHRsX5nAECa.twwW', '2023-12-04 07:16:53', 'user'),
+(14, 'haitest03', 'haitest03@gmail.com', '$2b$10$mWcfYsII519Xmb2MfeBfyOC7YFUbP//O4xqKi9aaWTKFP67YUxdO6', '2023-12-04 07:17:30', 'user'),
+(15, 'ngochai220435', 'ngochai220435@gmail.com', '$2b$10$t447DV8MYkkrXtLQF3X0bufnrlteqUcJbDV9ZMEcP008zINumJd02', '2023-12-04 07:21:55', 'user'),
+(16, 'haitest05', 'haitest05@gmail.com', '$2b$10$ziUKrorDezuiYcw8nSfEeeq1keyq1CBUrcG.42HLfFo/pz/JA7knW', '2023-12-04 07:52:31', 'user');
+
 --
 -- Indexes for dumped tables
 --
@@ -107,6 +135,14 @@ ALTER TABLE `product_categories`
   ADD PRIMARY KEY (`category_id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username_unique` (`username`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -121,6 +157,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `product_categories`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
